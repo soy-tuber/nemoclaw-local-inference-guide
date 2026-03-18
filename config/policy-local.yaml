@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+# Network policy for local inference via vLLM.
+# Replace placeholder IPs with your actual environment values (see env.example).
+#
+# This file contains ONLY the nvidia_inference section.
+# Merge it into your full sandbox policy.yaml under network_policies.
+
+network_policies:
+  nvidia_inference:
+    name: nvidia-inference
+    endpoints:
+      - { host: integrate.api.nvidia.com, port: 443 }
+      - { host: inference.local, port: 80 }
+      - { host: inference.local, port: 8000 }
+      # Replace with your $RELAY_BIND_IP and $VLLM_PORT
+      - { host: "${RELAY_BIND_IP}", port: "${VLLM_PORT}" }
+      # Replace with your $DOCKER_BRIDGE_IP and $VLLM_PORT
+      - { host: "${DOCKER_BRIDGE_IP}", port: "${VLLM_PORT}" }
+      - { host: 172.17.0.1, port: 8000 }
+      - { host: host.docker.internal, port: 8000 }
+    binaries:
+      - { path: /usr/bin/curl }
+      - { path: /bin/bash }
+      - { path: /usr/local/bin/opencode }
+      - { path: /sandbox/.venv/bin/python }
+      - { path: /sandbox/.venv/bin/python3 }
+      - { path: /usr/bin/node }

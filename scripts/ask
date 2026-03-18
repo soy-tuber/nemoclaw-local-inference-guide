@@ -1,0 +1,13 @@
+#!/bin/bash
+# One-liner LLM inference tool for NemoClaw sandbox.
+# Reads endpoint and model from environment variables.
+
+RELAY_BIND_IP="${RELAY_BIND_IP:-10.200.0.1}"
+VLLM_PORT="${VLLM_PORT:-8000}"
+MODEL_NAME="${MODEL_NAME:-nvidia/NVIDIA-Nemotron-Nano-9B-v2-Japanese}"
+
+no_proxy="*" curl -s -X POST "http://${RELAY_BIND_IP}:${VLLM_PORT}/v1/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer dummy" \
+  -d "{\"model\": \"${MODEL_NAME}\", \"messages\": [{\"role\": \"user\", \"content\": \"$1\"}]}" | \
+  python3 -c "import sys, json; print(json.load(sys.stdin)['choices'][0]['message']['content'])"
