@@ -1,4 +1,4 @@
-# Building a Claude Code-Class Agent Inside a Sandbox: Lessons from NemoClaw + OpenClaw + Local vLLM
+# Running OpenClaw with Local vLLM: Architecture, Parsers, and the Agent Engineering Gap
 
 *March 20, 2026*
 
